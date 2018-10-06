@@ -5,21 +5,20 @@
 
 ```console
 $ git clone https://github.com/MiscMag101/ExpressJS_CSurf.git
+$ cd ExpressJS_CSurf/Back\ End/
 ```
 
 * Install NPM Packages required for the back end
 
 ```console
-$ cd Back\ End
 $ npm install
 ```
 
 ## Create a self-signed certificat for the back end
 
 ```console
-$ cd Back\ End
 $ mkdir tls
-$ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \ 
+$ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 -keyout tls/key.pem -out tls/cert.pem
 ```
 
@@ -29,14 +28,12 @@ For this certificat, a hostname will be required (such as app.example.com).
 ## Start the back end
 
 ```console
-$ cd Back\ End
 $ npm start
 ```
 
 ## Test in your browser
 
-Open [http://app.example.com:3000](http://app.example.com:3000) and open devtools to see what happens (cookie and request).
-
+Open [https://app.example.com:3000](https://app.example.com:3000) and open devtools to see what happens (cookie and request).
 
 ## Test with curl
 
@@ -51,7 +48,7 @@ HTTP/1.1 403 Forbidden
 * Fetch XSRF Token
 
 ```console
-$ curl --insecure --head --cookie cookie.txt https://app.example.com:3000/api
+$ curl --insecure --head -c cookie.txt https://app.example.com:3000/api
 
 HTTP/1.1 200 OK
 X-Powered-By: Express
@@ -67,11 +64,11 @@ Connection: keep-alive
 * Send a POST request with XSRF token (Cookie double submit)
 
 ```console
-$ curl --request POST --cookie cookie.txt --header "X-XSRF-TOKEN: Hf2igNq5-j0hEx7PlLmiBYWbBRwVoHVT7kKs" --insecure --head https://app.example.com:3000/api
+$ curl --request POST --cookie cookie.txt --header "X-XSRF-TOKEN: Hf2igNq5-j0hEx7PlLmiBYWbBRwVoHVT7kKs" \
+--insecure --head https://app.example.com:3000/api
 ```
 
 Copy the value of XSRF-TOKEN cookie in X-XSRF-TOKEN HTTP header.
-
 
 
 # How I did it
